@@ -9,6 +9,26 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int contador = 0;
+
+  void incrementar(){
+    contador++;
+    setState(() {
+      
+    });
+  }
+  void restar(){
+    contador--;
+    setState(() {
+      
+    });
+  }
+  void resetar(){
+    contador = 0;
+    setState(() {
+      
+    });
+  }
+  
   @override
   Widget build(BuildContext context) {
     const tamano = TextStyle(fontSize: 30);
@@ -28,19 +48,47 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Row(
-        children: [
-          FloatingActionButton(
-            child: const Icon(Icons.add),
-            onPressed: () {
-              print('Se detecta una pulsacion');
-              contador++;
-              setState(() {});
-              print('$contador');
-            },
-          ),
-        ],
+      floatingActionButton: CustomFloatingActionButton(
+        incrementarFN: incrementar,
+        restarFN: restar,
+        resetarFN: resetar,
+
       ),
+    );
+  }
+}
+
+class CustomFloatingActionButton extends StatelessWidget {
+  final Function incrementarFN;
+  final Function restarFN;
+  final Function resetarFN;
+  const CustomFloatingActionButton({
+    super.key, required this.incrementarFN, required this.restarFN, required this.resetarFN,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        FloatingActionButton(
+          //child: const Icon(Icons.add),
+          child: const Text('Suma'),
+          onPressed: () => incrementarFN()
+        ),
+        SizedBox(width: 50),
+        FloatingActionButton(
+          //child: const Icon(Icons.add),
+          child: const Text('Restar'),
+          onPressed: () => restarFN()
+        ),
+        SizedBox(width: 50),
+        FloatingActionButton(
+          //child: const Icon(Icons.add),
+          child: const Text('Resetar'),
+          onPressed:  () => resetarFN()
+        ),
+      ],
     );
   }
 }
